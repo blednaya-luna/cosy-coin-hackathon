@@ -34,6 +34,17 @@ app.get('/oracle/write', async (req, res) => {
 app.post('/oracle/write', async (req, res) => {
 	console.log('json: ', req.body);
 
+	const data = Object.entries(req.body).reduce((acc, [key, value]) => {
+		acc.push({
+			key,
+			type: typeof value,
+			value,
+		});
+		return acc;
+	}, []);
+
+	console.log('data: ', data);
+
 	// TODO data example
 	// const data = {
 	// 	data: [
