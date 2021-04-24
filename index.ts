@@ -13,25 +13,6 @@ const oracleSeed = 'cross vapor tornado material learn other amount soon still a
 
 app.get('/hello-world', (req, res) => res.send('FAQ U'));
 
-app.get('/oracle/write', async (req, res) => {
-	const data = {
-		data: [
-			{
-				key: 'test_key',
-				type: 'integer',
-				value: 1,
-			},
-		],
-		chainId: 'T',
-	}
-
-	const signerDataTX = dataTX(data, oracleSeed);
-
-	await broadcast(signerDataTX, nodeUrl)
-		.then((r) => res.send(r))
-		.catch((e) => res.send(e));
-})
-
 app.post('/oracle/write', async (req, res) => {
 	const hash = crypto
 		.createHash('sha256')
@@ -53,14 +34,8 @@ app.post('/oracle/write', async (req, res) => {
 	}, oracleSeed);
 
 	await broadcast(signerDataTX, nodeUrl)
-		.then((r) => {
-			res.send(r);
-			console.info('response sent: ', r);
-		})
-		.catch((e) => {
-			res.send(e);
-			console.error('error sent: ', e);
-		});
+		.then((r) => res.send(r))
+		.catch((e) => res.send(e));
 })
 
 app.listen(PORT, () => {
