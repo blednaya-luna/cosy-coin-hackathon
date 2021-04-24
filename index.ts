@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import express from 'express';
 import bodyParser from 'body-parser';
 import { data as dataTX, broadcast } from '@waves/waves-transactions';
@@ -32,42 +33,34 @@ app.get('/oracle/write', async (req, res) => {
 })
 
 app.post('/oracle/write', async (req, res) => {
-	console.log('json: ', req.body);
+	const hash = crypto
+		.createHash('sha256')
+		.update(req.body.data)
+		.digest('hex');
 
 	const data = Object.entries(req.body).reduce((acc, [key, value]) => {
 		acc.push({
-			key,
+			key: `${hash}_${key}`,
 			type: typeof value,
-			value,
+			value: value,
 		});
 		return acc;
 	}, []);
 
-	console.log('data: ', data);
+	const signerDataTX = dataTX({
+		data,
+		chainId: 'T',
+	}, oracleSeed);
 
-	// TODO data example
-	// const data = {
-	// 	data: [
-	// 		{
-	// 			key: 'test_key',
-	// 			type: 'integer',
-	// 			value: 1,
-	// 		},
-	// 	],
-	// 	chainId: 'T',
-	// };
-	//
-	// const signerDataTX = dataTX(data, oracleSeed);
-	//
-	// await broadcast(signerDataTX, nodeUrl)
-	// 	.then((r) => {
-	// 		res.send(r);
-	// 		console.info('response sent: ', r);
-	// 	})
-	// 	.catch((e) => {
-	// 		res.send(e);
-	// 		console.error('error sent: ', e);
-	// 	});
+	await broadcast(signerDataTX, nodeUrl)
+		.then((r) => {
+			res.send(r);
+			console.info('response sent: ', r);
+		})
+		.catch((e) => {
+			res.send(e);
+			console.error('error sent: ', e);
+		});
 })
 
 app.listen(PORT, () => {
