@@ -35,7 +35,7 @@ app.get('/oracle/write', async (req, res) => {
 app.post('/oracle/write', async (req, res) => {
 	const hash = crypto
 		.createHash('sha256')
-		.update(req.body.data)
+		.update(req.body.email)
 		.digest('hex');
 
 	const data = Object.entries(req.body).reduce((acc, [key, value]) => {
