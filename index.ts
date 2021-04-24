@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 const PORT = process.env.PORT || 8000;
 
 const nodeUrl = 'https://nodes-testnet.wavesnodes.com';
-const oracleSeed = 'cross vapor tornado material learn other amount soon still analyst inch unknown vessel aware feed';
+const oracleSeed = 'six unlock sadness camera scrub above announce mixed elegant front cliff heart video practice alter';
 
 app.get('/hello-world', (req, res) => res.send('FAQ U'));
 
