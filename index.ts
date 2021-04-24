@@ -1,8 +1,9 @@
 import express from 'express';
-import fetch from 'node-fetch'; // TODO
+import bodyParser from 'body-parser';
 import { data as dataTX, broadcast } from '@waves/waves-transactions';
 
 const app = express();
+app.use(bodyParser.json());
 
 const PORT = process.env.PORT || 8000;
 
@@ -31,7 +32,7 @@ app.get('/oracle/write', async (req, res) => {
 })
 
 app.post('/oracle/write', async (req, res) => {
-	console.log('json: ', res.json);
+	console.log('json: ', req.body);
 
 	// TODO data example
 	// const data = {
