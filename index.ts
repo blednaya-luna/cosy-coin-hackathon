@@ -4,7 +4,7 @@ import { data as dataTX, broadcast } from '@waves/waves-transactions';
 
 const app = express();
 
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
 
 app.get('/hello-world', (req, res) => res.send('FAQ U'));
 
