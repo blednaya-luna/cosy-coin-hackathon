@@ -6,7 +6,7 @@ const app = express();
 
 const PORT = 8000;
 
-app.get('/', (req, res) => res.send('FAQ U'));
+app.get('/hello-world', (req, res) => res.send('FAQ U'));
 
 app.get('/oracle/write', async (req, res) => {
 	const oracleSeed = 'cross vapor tornado material learn other amount soon still analyst inch unknown vessel aware feed';
