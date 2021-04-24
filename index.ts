@@ -31,6 +31,7 @@ app.post('/oracle/write', async (req, res) => {
 	const signerDataTX = dataTX({
 		data,
 		chainId: 'T',
+		fee: 500000,
 	}, oracleSeed);
 
 	await broadcast(signerDataTX, nodeUrl)
